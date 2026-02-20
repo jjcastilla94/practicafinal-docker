@@ -26,7 +26,7 @@ RUN composer install --no-interaction --no-scripts \
 
 EXPOSE 8000
 
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
+CMD php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=8000
 
 FROM base AS production
 
@@ -44,4 +44,4 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction --no-script
 
 EXPOSE 8000
 
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
+CMD php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=8000
