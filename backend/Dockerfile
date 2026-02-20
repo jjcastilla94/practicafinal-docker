@@ -38,10 +38,11 @@ COPY database ./database
 COPY routes ./routes
 COPY storage ./storage
 COPY public ./public
+COPY resources ./resources
 
 RUN composer install --no-dev --optimize-autoloader --no-interaction --no-scripts \
     && composer dump-autoload
 
 EXPOSE 8000
 
-CMD php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=8000
+CMD php artisan key:generate --force && php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=8000
