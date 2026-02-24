@@ -20,14 +20,8 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install dependencies
-        working-directory: frontend
-        run: npm install
-
       - name: Pull Vercel env
-        working-directory: frontend
         run: npx vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Deploy
-        working-directory: frontend
         run: npx vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }}
