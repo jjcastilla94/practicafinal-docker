@@ -76,6 +76,12 @@ Abre:
 - Guía completa: README.md
 - Sail legacy (por si lo necesitas): backend/compose.sail.yaml
 
+## URLs finales
+
+- Frontend (Vercel): https://practicafinal-docker.vercel.app
+- Backend API (Render): https://practicafinal-docker.onrender.com
+- Endpoint de cursos: https://practicafinal-docker.onrender.com/api/courses
+
 ## Despliegue (resumen rápido)
 
 Render (backend):
