@@ -16,7 +16,7 @@ La app se divide en tres servicios:
 - Backend (Render) se conecta a MySQL en Railway.
 - Railway expone la base de datos para el entorno de produccion.
 
-![Arquitectura general](images/render funcionando.png)
+![Arquitectura general](images/render%20funcionando.png)
 
 ## Estructura del proyecto
 
@@ -99,8 +99,8 @@ CORS:
 1) Crea un proyecto MySQL en Railway.
 2) Copia las variables de conexion publicas:
 
-![Variables Railway](images/variables railway.png)
-![Variables Railway (detalle)](images/variables bd railway.png)
+![Variables Railway](images/variables%20railway.png)
+![Variables Railway (detalle)](images/variables%20bd%20railway.png)
 
 Variables utilizadas en Render:
 
@@ -118,20 +118,20 @@ Configuracion recomendada:
 - Runtime: Docker
 - Plan: Free
 
-![Config Render](images/render config.png)
-![Despliegue Render](images/despliegue back render.png)
+![Config Render](images/render%20config.png)
+![Despliegue Render](images/despliegue%20back%20render.png)
 
 Variables de entorno en Render:
 
-![Variables Render](images/variables render.png)
+![Variables Render](images/variables%20render.png)
 
 CORS en Render:
 
-![CORS en Render](images/cors variable en render.png)
+![CORS en Render](images/cors%20variable%20en%20render.png)
 
 Deploy Hook (para CI/CD):
 
-![Deploy Hook](images/secret key deploy hook.png)
+![Deploy Hook](images/secret%20key%20deploy%20hook.png)
 
 ## Despliegue en Vercel (Frontend)
 
@@ -142,7 +142,7 @@ Configuracion recomendada:
 - Build Command: `npm run build`
 - Output Directory: dist
 
-![Config Vercel](images/vercel config.png)
+![Config Vercel](images/vercel%20config.png)
 
 Variable clave:
 
@@ -150,12 +150,12 @@ Variable clave:
 
 Token para CI/CD:
 
-![Token Vercel](images/token en vercel.png)
+![Token Vercel](images/token%20en%20vercel.png)
 
 Proyecto desplegado:
 
-![Vercel funcionando](images/vercel funcionando.png)
-![Vercel desplegado](images/desplegada vercel.png)
+![Vercel funcionando](images/vercel%20funcionando.png)
+![Vercel desplegado](images/desplegada%20vercel.png)
 
 ## CI/CD con GitHub Actions
 
@@ -168,9 +168,9 @@ Secrets necesarios en GitHub:
 
 Capturas de referencia:
 
-![Vercel Token Secret](images/secret key vercel token.png)
-![Vercel Org ID Secret](images/secret key user id.png)
-![Vercel Project ID Secret](images/secret key project id.png)
+![Vercel Token Secret](images/secret%20key%20vercel%20token.png)
+![Vercel Org ID Secret](images/secret%20key%20user%20id.png)
+![Vercel Project ID Secret](images/secret%20key%20project%20id.png)
 
 Workflows:
 
