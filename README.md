@@ -81,6 +81,7 @@ Abre:
 - Frontend (Vercel): https://practicafinal-docker.vercel.app
 - Backend API (Render): https://practicafinal-docker.onrender.com
 - Endpoint de cursos: https://practicafinal-docker.onrender.com/api/courses
+- Endpoint de estudiantes: https://practicafinal-docker.onrender.com/api/students
 
 ## Despliegue (resumen rápido)
 
