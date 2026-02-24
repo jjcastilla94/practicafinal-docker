@@ -218,25 +218,15 @@ Workflows:
 - Backend: [deploy-backend.yaml](.github/workflows/deploy-backend.yaml)
 - Frontend: [deploy-frontend.yaml](.github/workflows/deploy-frontend.yaml)
 
-## 12. Verificacion final
 
-1) Frontend carga cursos y estudiantes:
-
-- https://practicafinal-docker.vercel.app
-
-2) API responde:
-
-- https://practicafinal-docker.onrender.com/api/courses
-- https://practicafinal-docker.onrender.com/api/students
-
-## 13. URLs finales
+## 12. URLs finales
 
 - Frontend (Vercel): https://practicafinal-docker.vercel.app
-- Backend API (Render): https://practicafinal-docker.onrender.com
-- Endpoint de cursos: https://practicafinal-docker.onrender.com/api/courses
-- Endpoint de estudiantes: https://practicafinal-docker.onrender.com/api/students
+- Backend API (Render): 
+    - Endpoint de cursos: https://practicafinal-docker.onrender.com/api/courses
+    - Endpoint de estudiantes: https://practicafinal-docker.onrender.com/api/students
 
-## 14. Comandos utiles
+## 13. Comandos utiles
 
 ```
 docker compose up --build
@@ -247,7 +237,7 @@ docker compose exec backend php artisan migrate
 docker compose exec backend php artisan tinker
 ```
 
-## 15. Notas finales
+## 14. Notas finales
 
 - Mantener CORS actualizado cuando cambie el dominio de Vercel.
 - Para pruebas locales, usa `http://localhost:3000` en `CORS_ALLOWED_ORIGINS`.
