@@ -1,12 +1,22 @@
 # Despliegue en Vercel, Render y Railway (Laravel + Vue)
 
-Este repositorio es una guia practica para estructurar, dockerizar y desplegar una aplicacion web siguiendo CI/CD con GitHub Actions, Vercel, Render y Railway.
+Guia practica y profesional para estructurar, dockerizar y desplegar una aplicacion web con CI/CD usando GitHub Actions, Vercel, Render y Railway.
 
 - Frontend: Vue 3 + Vite + Tailwind CSS
 - Backend: Laravel (API REST)
 - Base de Datos: MySQL
 - Desarrollo: Docker Compose
 - Despliegue: GitHub Actions + Vercel + Render + Railway
+
+## Arquitectura
+
+La app se divide en tres servicios:
+
+- Frontend (Vercel) consume la API en Render.
+- Backend (Render) se conecta a MySQL en Railway.
+- Railway expone la base de datos para el entorno de produccion.
+
+![Arquitectura general](images/render funcionando.png)
 
 ## Estructura del proyecto
 
@@ -19,62 +29,13 @@ Este repositorio es una guia practica para estructurar, dockerizar y desplegar u
 └── .env.example  # Variables locales para Docker Compose
 ```
 
-## Pasos locales (detallado)
+Archivos clave:
 
-Copia variables de entorno:
-
-```
-cp .env.example .env
-cp backend/.env.example backend/.env
-cp frontend/.env.example frontend/.env
-```
-
-Levanta todo:
-
-```
-docker compose up --build
-```
-
-Ejecuta migraciones:
-
-```
-docker compose exec backend php artisan migrate
-```
-
-Abre:
-
-- Frontend: http://localhost:3000
-- Backend API: http://localhost:8000
-
-## Backend (Laravel)
-
-- Endpoints API:
-  - GET /api/courses
-  - POST /api/courses
-  - PUT /api/courses/{id}
-  - DELETE /api/courses/{id}
-  - GET /api/students
-  - POST /api/students
-  - PUT /api/students/{id}
-  - DELETE /api/students/{id}
-
-- CORS:
-  - Configurado en [backend/config/cors.php](backend/config/cors.php)
-  - Variables: `CORS_ALLOWED_ORIGINS`
-
-## Frontend (Vue)
-
-- Variable de entorno:
-  - `VITE_API_URL` apunta al backend (local o Render)
-
-## Dónde quedó todo
-
-- Docker Compose local: compose.yaml
-- Backend Laravel: backend/Dockerfile
-- Frontend Vue: frontend/Dockerfile
-- CORS: backend/config/cors.php
-- Guía completa: README.md
-- Sail legacy (por si lo necesitas): backend/compose.sail.yaml
+- [compose.yaml](compose.yaml) para desarrollo local.
+- [backend/Dockerfile](backend/Dockerfile) para el backend.
+- [frontend/Dockerfile](frontend/Dockerfile) para el frontend.
+- [backend/config/cors.php](backend/config/cors.php) para CORS.
+- Workflows: [deploy-backend.yaml](.github/workflows/deploy-backend.yaml) y [deploy-frontend.yaml](.github/workflows/deploy-frontend.yaml).
 
 ## URLs finales
 
@@ -83,29 +44,149 @@ Abre:
 - Endpoint de cursos: https://practicafinal-docker.onrender.com/api/courses
 - Endpoint de estudiantes: https://practicafinal-docker.onrender.com/api/students
 
-## Despliegue (resumen rápido)
+## Desarrollo local con Docker
 
-Render (backend):
+1) Copia variables de entorno:
+
+```
+cp .env.example .env
+cp backend/.env.example backend/.env
+cp frontend/.env.example frontend/.env
+```
+
+2) Levanta todo:
+
+```
+docker compose up --build
+```
+
+3) Ejecuta migraciones:
+
+```
+docker compose exec backend php artisan migrate
+```
+
+4) Abre:
+
+- Frontend: http://localhost:3000
+- Backend API: http://localhost:8000
+
+## Backend (Laravel)
+
+Endpoints disponibles:
+
+- GET /api/courses
+- POST /api/courses
+- PUT /api/courses/{id}
+- DELETE /api/courses/{id}
+- GET /api/students
+- POST /api/students
+- PUT /api/students/{id}
+- DELETE /api/students/{id}
+
+CORS:
+
+- Configurado en [backend/config/cors.php](backend/config/cors.php)
+- Variable: `CORS_ALLOWED_ORIGINS`
+
+## Frontend (Vue)
+
+- Variable de entorno:
+  - `VITE_API_URL` apunta al backend (local o Render)
+
+## Despliegue en Railway (MySQL)
+
+1) Crea un proyecto MySQL en Railway.
+2) Copia las variables de conexion publicas:
+
+![Variables Railway](images/variables railway.png)
+![Variables Railway (detalle)](images/variables bd railway.png)
+
+Variables utilizadas en Render:
+
+- `DB_HOST`
+- `DB_PORT`
+- `DB_DATABASE`
+- `DB_USERNAME`
+- `DB_PASSWORD`
+
+## Despliegue en Render (Backend)
+
+Configuracion recomendada:
 
 - Root Directory: backend
 - Runtime: Docker
-- Variables: APP_KEY, DB_CONNECTION, DATABASE_URL, CORS_ALLOWED_ORIGINS (con tu dominio Vercel)
-- Deploy Hook guardado como RENDER_DEPLOY_HOOK
+- Plan: Free
 
-Vercel (frontend):
+![Config Render](images/render config.png)
+![Despliegue Render](images/despliegue back render.png)
+
+Variables de entorno en Render:
+
+![Variables Render](images/variables render.png)
+
+CORS en Render:
+
+![CORS en Render](images/cors variable en render.png)
+
+Deploy Hook (para CI/CD):
+
+![Deploy Hook](images/secret key deploy hook.png)
+
+## Despliegue en Vercel (Frontend)
+
+Configuracion recomendada:
 
 - Root Directory: frontend
-- Variable: VITE_API_URL con la URL de Render
-- Secrets en GitHub: VERCEL_TOKEN, VERCEL_ORG_ID, VERCEL_PROJECT_ID
+- Framework: Vite
+- Build Command: `npm run build`
+- Output Directory: dist
 
-Railway (MySQL):
+![Config Vercel](images/vercel config.png)
 
-- Usa DATABASE_URL en Render con la cadena de Railway
+Variable clave:
 
-## Workflows
+- `VITE_API_URL=https://practicafinal-docker.onrender.com`
+
+Token para CI/CD:
+
+![Token Vercel](images/token en vercel.png)
+
+Proyecto desplegado:
+
+![Vercel funcionando](images/vercel funcionando.png)
+![Vercel desplegado](images/desplegada vercel.png)
+
+## CI/CD con GitHub Actions
+
+Secrets necesarios en GitHub:
+
+- `RENDER_DEPLOY_HOOK`
+- `VERCEL_TOKEN`
+- `VERCEL_ORG_ID`
+- `VERCEL_PROJECT_ID`
+
+Capturas de referencia:
+
+![Vercel Token Secret](images/secret key vercel token.png)
+![Vercel Org ID Secret](images/secret key user id.png)
+![Vercel Project ID Secret](images/secret key project id.png)
+
+Workflows:
 
 - Backend: [deploy-backend.yaml](.github/workflows/deploy-backend.yaml)
 - Frontend: [deploy-frontend.yaml](.github/workflows/deploy-frontend.yaml)
+
+## Verificacion final
+
+1) Frontend carga cursos y estudiantes:
+
+- https://practicafinal-docker.vercel.app
+
+2) API responde:
+
+- https://practicafinal-docker.onrender.com/api/courses
+- https://practicafinal-docker.onrender.com/api/students
 
 ## Comandos utiles
 
@@ -117,3 +198,9 @@ docker compose exec backend php artisan migrate
 
 docker compose exec backend php artisan tinker
 ```
+
+## Notas finales
+
+- Mantener CORS actualizado cuando cambie el dominio de Vercel.
+- Para pruebas locales, usa `http://localhost:3000` en `CORS_ALLOWED_ORIGINS`.
+- Si cambias el dominio de Vercel, actualiza `VITE_API_URL` en Vercel.
