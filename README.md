@@ -16,7 +16,6 @@ La app se divide en tres servicios:
 - Backend (Render) se conecta a MySQL en Railway.
 - Railway expone la base de datos para el entorno de produccion.
 
-![Arquitectura general](images/render%20funcionando.png)
 
 ## Estructura del proyecto
 
@@ -132,6 +131,8 @@ CORS en Render:
 Deploy Hook (para CI/CD):
 
 ![Deploy Hook](images/secret%20key%20deploy%20hook.png)
+
+![Render funcionando](images/render%20funcionando.png)
 
 ## Despliegue en Vercel (Frontend)
 
