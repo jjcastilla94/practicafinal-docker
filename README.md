@@ -1,14 +1,36 @@
 # Despliegue en Vercel, Render y Railway (Laravel + Vue)
 
-Guia practica y profesional para estructurar, dockerizar y desplegar una aplicacion web con CI/CD usando GitHub Actions, Vercel, Render y Railway.
+Guia practica y profesional para estructurar, dockerizar y desplegar una aplicacion web con CI/CD usando GitHub Actions, Vercel, Render y Railway. Esta documentacion refleja el flujo real que se siguio en este proyecto.
 
-- Frontend: Vue 3 + Vite + Tailwind CSS
-- Backend: Laravel (API REST)
-- Base de Datos: MySQL
-- Desarrollo: Docker Compose
-- Despliegue: GitHub Actions + Vercel + Render + Railway
+## Indice
 
-## Arquitectura
+1. Introduccion
+2. Arquitectura
+3. Tecnologias utilizadas
+4. Estructura del proyecto
+5. Desarrollo local con Docker
+6. Estructura del Frontend
+7. Estructura del Backend
+8. Despliegue en Railway (MySQL)
+9. Despliegue en Render (Backend)
+10. Despliegue en Vercel (Frontend)
+11. CI/CD con GitHub Actions
+12. Verificacion final
+13. Comandos utiles
+14. Notas finales
+
+## 1. Introduccion
+
+**Que es Vercel**
+Plataforma de despliegue optimizada para frontends (Vue, React, Next, etc). Provee CDN global y despliegues rapidos.
+
+**Que es Render**
+Plataforma para desplegar APIs y servicios backend con SSL y escalado administrado.
+
+**Que es Railway**
+Plataforma para bases de datos y servicios. Se usa aqui para MySQL en produccion.
+
+## 2. Arquitectura
 
 La app se divide en tres servicios:
 
@@ -16,8 +38,17 @@ La app se divide en tres servicios:
 - Backend (Render) se conecta a MySQL en Railway.
 - Railway expone la base de datos para el entorno de produccion.
 
+![Render funcionando](images/render%20funcionando.png)
 
-## Estructura del proyecto
+## 3. Tecnologias utilizadas
+
+- Frontend: Vue 3 + Vite + Tailwind CSS
+- Backend: Laravel (API REST)
+- Base de datos: MySQL
+- Desarrollo local: Docker Compose
+- Despliegue: GitHub Actions + Vercel + Render + Railway
+
+## 4. Estructura del proyecto
 
 ```
 .
@@ -36,14 +67,13 @@ Archivos clave:
 - [backend/config/cors.php](backend/config/cors.php) para CORS.
 - Workflows: [deploy-backend.yaml](.github/workflows/deploy-backend.yaml) y [deploy-frontend.yaml](.github/workflows/deploy-frontend.yaml).
 
-## URLs finales
+## 5. Desarrollo local con Docker
 
-- Frontend (Vercel): https://practicafinal-docker.vercel.app
-- Backend API (Render): https://practicafinal-docker.onrender.com
-- Endpoint de cursos: https://practicafinal-docker.onrender.com/api/courses
-- Endpoint de estudiantes: https://practicafinal-docker.onrender.com/api/students
+Requisitos:
 
-## Desarrollo local con Docker
+- Docker y Docker Compose instalados.
+
+Pasos:
 
 1) Copia variables de entorno:
 
@@ -70,7 +100,20 @@ docker compose exec backend php artisan migrate
 - Frontend: http://localhost:3000
 - Backend API: http://localhost:8000
 
-## Backend (Laravel)
+## 6. Estructura del Frontend
+
+Componentes principales:
+
+- [frontend/src/App.vue](frontend/src/App.vue) como componente principal.
+- [frontend/src/main.ts](frontend/src/main.ts) como punto de entrada.
+- [frontend/src/style.css](frontend/src/style.css) para estilos globales.
+- [frontend/src/services/api.ts](frontend/src/services/api.ts) como cliente HTTP.
+
+Variable de entorno:
+
+- `VITE_API_URL` apunta al backend (local o Render).
+
+## 7. Estructura del Backend
 
 Endpoints disponibles:
 
@@ -88,12 +131,7 @@ CORS:
 - Configurado en [backend/config/cors.php](backend/config/cors.php)
 - Variable: `CORS_ALLOWED_ORIGINS`
 
-## Frontend (Vue)
-
-- Variable de entorno:
-  - `VITE_API_URL` apunta al backend (local o Render)
-
-## Despliegue en Railway (MySQL)
+## 8. Despliegue en Railway (MySQL)
 
 1) Crea un proyecto MySQL en Railway.
 2) Copia las variables de conexion publicas:
@@ -109,7 +147,7 @@ Variables utilizadas en Render:
 - `DB_USERNAME`
 - `DB_PASSWORD`
 
-## Despliegue en Render (Backend)
+## 9. Despliegue en Render (Backend)
 
 Configuracion recomendada:
 
@@ -132,9 +170,7 @@ Deploy Hook (para CI/CD):
 
 ![Deploy Hook](images/secret%20key%20deploy%20hook.png)
 
-![Render funcionando](images/render%20funcionando.png)
-
-## Despliegue en Vercel (Frontend)
+## 10. Despliegue en Vercel (Frontend)
 
 Configuracion recomendada:
 
@@ -158,7 +194,7 @@ Proyecto desplegado:
 ![Vercel funcionando](images/vercel%20funcionando.png)
 ![Vercel desplegado](images/desplegada%20vercel.png)
 
-## CI/CD con GitHub Actions
+## 11. CI/CD con GitHub Actions
 
 Secrets necesarios en GitHub:
 
@@ -178,7 +214,7 @@ Workflows:
 - Backend: [deploy-backend.yaml](.github/workflows/deploy-backend.yaml)
 - Frontend: [deploy-frontend.yaml](.github/workflows/deploy-frontend.yaml)
 
-## Verificacion final
+## 12. Verificacion final
 
 1) Frontend carga cursos y estudiantes:
 
@@ -189,7 +225,14 @@ Workflows:
 - https://practicafinal-docker.onrender.com/api/courses
 - https://practicafinal-docker.onrender.com/api/students
 
-## Comandos utiles
+## 13. URLs finales
+
+- Frontend (Vercel): https://practicafinal-docker.vercel.app
+- Backend API (Render): https://practicafinal-docker.onrender.com
+- Endpoint de cursos: https://practicafinal-docker.onrender.com/api/courses
+- Endpoint de estudiantes: https://practicafinal-docker.onrender.com/api/students
+
+## 14. Comandos utiles
 
 ```
 docker compose up --build
@@ -200,7 +243,7 @@ docker compose exec backend php artisan migrate
 docker compose exec backend php artisan tinker
 ```
 
-## Notas finales
+## 15. Notas finales
 
 - Mantener CORS actualizado cuando cambie el dominio de Vercel.
 - Para pruebas locales, usa `http://localhost:3000` en `CORS_ALLOWED_ORIGINS`.
