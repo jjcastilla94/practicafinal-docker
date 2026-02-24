@@ -4,20 +4,21 @@ Guia practica y profesional para estructurar, dockerizar y desplegar una aplicac
 
 ## Indice
 
-1. Introduccion
-2. Arquitectura
-3. Tecnologias utilizadas
-4. Estructura del proyecto
-5. Desarrollo local con Docker
-6. Estructura del Frontend
-7. Estructura del Backend
-8. Despliegue en Railway (MySQL)
-9. Despliegue en Render (Backend)
-10. Despliegue en Vercel (Frontend)
-11. CI/CD con GitHub Actions
-12. Verificacion final
-13. Comandos utiles
-14. Notas finales
+1. [Introduccion](#1-introduccion)
+2. [Arquitectura](#2-arquitectura)
+3. [Tecnologias utilizadas](#3-tecnologias-utilizadas)
+4. [Estructura del proyecto](#4-estructura-del-proyecto)
+5. [Desarrollo local con Docker](#5-desarrollo-local-con-docker)
+6. [Estructura del Frontend](#6-estructura-del-frontend)
+7. [Estructura del Backend](#7-estructura-del-backend)
+8. [Despliegue en Railway (MySQL)](#8-despliegue-en-railway-mysql)
+9. [Despliegue en Render (Backend)](#9-despliegue-en-render-backend)
+10. [Despliegue en Vercel (Frontend)](#10-despliegue-en-vercel-frontend)
+11. [CI/CD con GitHub Actions](#11-cicd-con-github-actions)
+12. [Verificacion final](#12-verificacion-final)
+13. [URLs finales](#13-urls-finales)
+14. [Comandos utiles](#14-comandos-utiles)
+15. [Notas finales](#15-notas-finales)
 
 ## 1. Introduccion
 
@@ -38,7 +39,6 @@ La app se divide en tres servicios:
 - Backend (Render) se conecta a MySQL en Railway.
 - Railway expone la base de datos para el entorno de produccion.
 
-![Render funcionando](images/render%20funcionando.png)
 
 ## 3. Tecnologias utilizadas
 
@@ -169,6 +169,10 @@ CORS en Render:
 Deploy Hook (para CI/CD):
 
 ![Deploy Hook](images/secret%20key%20deploy%20hook.png)
+
+Carga los datos Render:
+
+![Render funcionando](images/render%20funcionando.png)
 
 ## 10. Despliegue en Vercel (Frontend)
 
